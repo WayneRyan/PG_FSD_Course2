@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+    public static final String baseDirectory = "C:\\junk";
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         boolean done = false;
@@ -13,7 +15,7 @@ public class UserInterface {
             showMainMenu();
             switch (in.nextInt()) {
                 case 1 :
-                    System.out.println("You typed one");
+                    System.out.println(BackendLogic.getFileListing(baseDirectory).toString());
                     break;
                 case 2 :
                     System.out.println("You typed two");
@@ -37,17 +39,18 @@ public class UserInterface {
             showSubMenu();
             switch (in.nextLine().trim().toLowerCase()) {
                 case "a" :
-                    System.out.println("You typed 'a'");
+                    System.out.println("Please type a file name");
+                    BackendLogic.createFile(in.nextLine().trim());
                     break;
                 case "b" :
-                    System.out.println("You typed 'b'");
-                    doSubMenu();
+                    System.out.println("Please type a file name");
+                    BackendLogic.deleteFile(in.nextLine().trim());
                     break;
                 case "c" :
-                    System.out.println("You typed 'c'");
+                    System.out.println("Please type a search string");
+                    System.out.printf(BackendLogic.filterFileListing(in.nextLine().trim(), BackendLogic.getFileListing("C:\\junk")).toString());
                     break;
                 case "d" :
-                    System.out.println("You typed 'd'");
                     done = true;
                     break;
                 default:

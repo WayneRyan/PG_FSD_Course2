@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class MainClass {
+public class BackendLogic {
     
     public static void main(String[] args) {
         System.out.printf(filterFileListing("[junk]", getFileListing("C:\\junk")).toString());
