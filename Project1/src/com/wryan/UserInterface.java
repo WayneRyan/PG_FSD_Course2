@@ -6,29 +6,32 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    public static final String baseDirectory = "C:\\junk";
+    public static final String baseDirectory = "C:\\junk\\";
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        Object
         boolean done = false;
+        Scanner in = new Scanner(System.in);
         while(!done){
-            showMainMenu();
-            switch (in.nextInt()) {
-                case 1 :
-                    System.out.println(BackendLogic.getFileListing(baseDirectory).toString());
-                    break;
-                case 2 :
-                    System.out.println("You typed two");
-                    doSubMenu();
-                    break;
-                case 3 :
-                    System.out.println("You typed three");
-                    done = true;
-                    break;
-                default:
-                    System.out.println("Please select one of the three options");
-                    break;
+            try {
+                showMainMenu();
+                switch (Integer.parseInt(in.nextLine())) {
+                    case 1 :
+                        System.out.println(BackendLogic.getFileListing(baseDirectory).toString());
+                        break;
+                    case 2 :
+                        System.out.println("You typed two");
+                        doSubMenu();
+                        break;
+                    case 3 :
+                        System.out.println("You typed three");
+                        done = true;
+                        break;
+                    default:
+                        System.out.println("Please select one of the three options");
+                        break;
+                }
+            } catch (Exception e){
+                System.out.println("Something went wrong. Please try again.");
             }
         }
     }
@@ -41,15 +44,15 @@ public class UserInterface {
             switch (in.nextLine().trim().toLowerCase()) {
                 case "a" :
                     System.out.println("Please type a file name");
-                    BackendLogic.createFile(in.nextLine().trim());
+                    BackendLogic.createFile(baseDirectory + in.nextLine().trim());
                     break;
                 case "b" :
                     System.out.println("Please type a file name");
-                    BackendLogic.deleteFile(in.nextLine().trim());
+                    BackendLogic.deleteFile(baseDirectory + in.nextLine().trim());
                     break;
                 case "c" :
                     System.out.println("Please type a search string");
-                    System.out.printf(BackendLogic.filterFileListing(in.nextLine().trim(), BackendLogic.getFileListing("C:\\junk")).toString());
+                    System.out.printf(BackendLogic.filterFileListing(in.nextLine().trim(), BackendLogic.getFileListing(baseDirectory)).toString());
                     break;
                 case "d" :
                     done = true;
