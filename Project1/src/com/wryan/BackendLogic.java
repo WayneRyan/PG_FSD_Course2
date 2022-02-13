@@ -1,18 +1,15 @@
 package com.wryan;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class BackendLogic {
-    
-    public static void main(String[] args) {
-        System.out.printf(filterFileListing("[junk]", getFileListing("C:\\junk")).toString());
 
-    }
-
-    public static void deleteFile(String filePath){
+    public static void deleteFile( @NotNull String filePath){
         File myObj = new File(filePath);
         if (myObj.delete()) {
             System.out.println("Deleted the file: " + myObj.getName());
@@ -21,7 +18,7 @@ public class BackendLogic {
         }
     }
 
-    public static ArrayList<String> filterFileListing(String searchString, ArrayList<String> fileNames){
+    public static ArrayList<String> filterFileListing( @NotNull String searchString, @NotNull ArrayList<String> fileNames){
         Pattern pattern = Pattern.compile(searchString, Pattern.CASE_INSENSITIVE);
         ArrayList<String> matchingFileNames = new ArrayList<String>();
         for (String fileName : fileNames) {
@@ -32,8 +29,11 @@ public class BackendLogic {
         return matchingFileNames;
     }
 
-    public static void createFile(String filePath){
+    public static void createFile( @NotNull String filePath){
         try {
+            // TODO: Check if file exists
+            // TODO: jail to specific folder
+            // TODO: Check for write permissions
             File myObj = new File(filePath);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
@@ -46,7 +46,7 @@ public class BackendLogic {
         }
     }
 
-    public static ArrayList<String> getFileListing(String filePath){
+    public static ArrayList<String> getFileListing( @NotNull String filePath){
         File folder = new File(filePath);
         File[] topLevelFiles = folder.listFiles();
         ArrayList<String> fileNames = new ArrayList<String>();
