@@ -1,0 +1,3 @@
+This is my input file.
+I will read it.
+I will print it to standard out.
