@@ -10,11 +10,14 @@ public class LongestSubsequence {
         System.out.println(Arrays.toString(sequence));
         int result = 1;
         for (int i=1 ; i<sequence.length ; i++){
-            for (int j=0 ; j<i ; j++){
+            for (int j=i-1 ; j>=0 ; j--){
                 if (sequence[j] < sequence[i] && memoization[i]<=memoization[j]){
                     int updateVal = memoization[j]+1;
                     memoization[i] = updateVal;
-                    if(result<updateVal) result = updateVal;
+                    if(result<updateVal){
+                        result = updateVal;
+                        break;
+                    }
                 }
             }
         }
