@@ -5,18 +5,19 @@ import java.util.Scanner;
 
 public class Main {
 
-    private ArrayList<Integer> expenses = new ArrayList<>();
-    private String prompt = "Enter your choice:\n"+
+    private final ArrayList<Integer> expenses = new ArrayList<>();
+    private final String prompt = "Enter your choice:\n" +
             "1. I wish to review my expenditures\n" +
-            "2. I wish to add an expenditure\n"+
-            "3. I wish to delete an expenditure\n"+
-            "4. I wish to sort the expenditures\n"+
-            "5. I wish to search for a particular expenditure\n"+
+            "2. I wish to add an expenditure\n" +
+            "3. I wish to delete an expenditure\n" +
+            "4. I wish to sort the expenditures\n" +
+            "5. I wish to search for a particular expenditure\n" +
             "6. Close the application\n";
     private boolean isSorted = true;
-    private Scanner sc = new Scanner(System.in);
-    public Main(){
-        expenses.addAll(Arrays.asList(1000,2300,45000,32000,110));
+    private final Scanner sc = new Scanner(System.in);
+
+    public Main() {
+        expenses.addAll(Arrays.asList(1000, 2300, 45000, 32000, 110));
         isSorted = false;
     }
 
@@ -26,15 +27,15 @@ public class Main {
         System.out.println("\tWelcome to TheDesk \n");
         System.out.println("**************************************");
         Main m = new Main();
-        while(true){
+        while (true) {
             m.optionsSelection();
         }
     }
 
-    private Integer fetchIntegerValue(){
-        try{
+    private Integer fetchIntegerValue() {
+        try {
             return Integer.parseInt(sc.nextLine());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Please type an integer value");
             return fetchIntegerValue();
         }
@@ -50,7 +51,7 @@ public class Main {
             case 2:
                 System.out.println("Enter the value to add your Expense: \n");
                 Integer value = fetchIntegerValue();
-                isSorted = expenses.size()==0 || (isSorted && value > expenses.get(expenses.size()-1));
+                isSorted = expenses.size() == 0 || (isSorted && value > expenses.get(expenses.size() - 1));
                 expenses.add(value);
                 System.out.println("Your value is updated\n");
                 System.out.println(expenses + "\n");
@@ -73,9 +74,9 @@ public class Main {
                 System.out.println("Enter the expense you need to search:\t");
                 int location = searchExpenses(fetchIntegerValue());
                 if (location >= 0) {
-                    System.out.println("The expense is at index: "  + location);
+                    System.out.println("The expense is at index: " + location);
                 } else {
-                    System.out.println("The expense is not in your list. Should be added at index: " + (-location-1));
+                    System.out.println("The expense is not in your list. Should be added at index: " + (-location - 1));
                 }
                 break;
             case 6:
@@ -93,13 +94,15 @@ public class Main {
     }
 
     private int searchExpenses(Integer searchValue) {
-        if (isSorted){
-            return Collections.binarySearch(expenses,searchValue);
+        if (isSorted) {
+            return Collections.binarySearch(expenses, searchValue);
         } else {
-            for( int i=0 ; i<expenses.size() ; i++){
-                if(expenses.get(i).equals(searchValue)) {return i;}
+            for (int i = 0; i < expenses.size(); i++) {
+                if (expenses.get(i).equals(searchValue)) {
+                    return i;
+                }
             }
-            return -expenses.size()-1;
+            return -expenses.size() - 1;
         }
     }
 
