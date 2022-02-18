@@ -42,9 +42,13 @@ public class BackendLogic {
     }
 
     private static File createFileObject(@NotNull String fileName) {
+        if (!checkFileName(fileName)){
+            System.out.println(fileName + " is not a simple file name. This application only accepts simple file names without directory structure.");
+            return null;
+        }
         File myObj = new File(baseDirectory + fileName);
         if (myObj.isDirectory()){
-            System.out.println(myObj.getName() + " is a directory. This application does not delete directories.");
+            System.out.println(myObj.getName() + " is a directory. This application does not accept directory names.");
             return null;
         }
         return myObj;
