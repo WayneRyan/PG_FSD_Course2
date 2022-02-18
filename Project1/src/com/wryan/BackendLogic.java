@@ -4,13 +4,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class BackendLogic {
 
-    public static void deleteFile( @NotNull String filePath){
-        File myObj = new File(filePath);
+    private static final String baseDirectory = "C:\\junk\\";
+
+    public static boolean checkFileName(@NotNull String fileName){
+        return fileName == Paths.get(fileName).getFileName().toString();
+    }
+
+    public static void deleteFile( @NotNull String fileName){
+        File myObj = createFileObject(fileName);
+        if (myObj==null) { return; }
+        if ( !myObj.exists()){
+            System.out.println(myObj.getName() + " does not exist.");
+            return;
+        }
         if (myObj.delete()) {
             System.out.println("Deleted the file: " + myObj.getName());
         } else {
@@ -29,16 +41,28 @@ public class BackendLogic {
         return matchingFileNames;
     }
 
-    public static void createFile( @NotNull String filePath){
+    private static File createFileObject(@NotNull String fileName) {
+        File myObj = new File(baseDirectory + fileName);
+        if (myObj.isDirectory()){
+            System.out.println(myObj.getName() + " is a directory. This application does not delete directories.");
+            return null;
+        }
+        return myObj;
+    }
+
+    public static void createFile( @NotNull String fileName){
         try {
-            // TODO: Check if file exists
             // TODO: jail to specific folder
-            // TODO: Check for write permissions
-            File myObj = new File(filePath);
+            File myObj = createFileObject(fileName);
+            if (myObj==null) { return; }
+            if ( myObj.exists()){
+                System.out.println(myObj.getName() + " already exists.");
+                return;
+            }
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
-                System.out.println("File already exists.");
+                System.out.println("Could not create file.");
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -46,15 +70,13 @@ public class BackendLogic {
         }
     }
 
-    public static ArrayList<String> getFileListing( @NotNull String filePath){
-        File folder = new File(filePath);
+    public static ArrayList<String> getFileListing(){
+        File folder = new File(baseDirectory);
         File[] topLevelFiles = folder.listFiles();
         ArrayList<String> fileNames = new ArrayList<String>();
         for (File f : topLevelFiles) {
             if (f.isFile()) {
                 fileNames.add(f.getName());
-            } else if (f.isDirectory()) {
-                fileNames.addAll(getFileListing(filePath + "\\" + f.getName()));
             }
         }
         return fileNames;
