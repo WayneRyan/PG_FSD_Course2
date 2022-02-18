@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -13,29 +14,17 @@ public class Main {
     }
 
     private static void optionsSelection() {
-        String[] arr = {"1. I wish to review my expenditure",
-                "2. I wish to add my expenditure",
-                "3. I wish to delete my expenditure",
-                "4. I wish to sort the expenditures",
-                "5. I wish to search for a particular expenditure",
-                "6. Close the application"
-        };
-        int[] arr1 = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < slen; i++) {
-            System.out.println(arr[i]);
-            // display all the Strings mentioned in the String array
-        }
-        ArrayList<Integer> arrlist = new ArrayList<Integer>();
-        ArrayList<Integer> expenses = new ArrayList<Integer>();
-        expenses.add(1000);
-        expenses.add(2300);
-        expenses.add(45000);
-        expenses.add(32000);
-        expenses.add(110);
-        expenses.addAll(arrlist);
-        System.out.println("\nEnter your choice:\t");
+        String prompt = "1. I wish to review my expenditures\n" +
+                "2. I wish to add an expenditure\n"+
+                "3. I wish to delete an expenditure\n"+
+                "4. I wish to search for a particular expenditure\n"+
+                "5. Close the application\n";
+        ArrayList<Integer> expenses = new ArrayList<Integer>(Arrays.asList(1000,2300,45000,32000,110));
+        sortExpenses(expenses);
         Scanner sc = new Scanner(System.in);
         while (true) {
+            System.out.println("\nEnter your choice:\t");
+            System.out.println(prompt);
             switch (sc.nextInt()) {
                 case 1:
                     System.out.println("Your saved expenses are listed below: \n");
@@ -43,10 +32,11 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Enter the value to add your Expense: \n");
-                    int value = sc.nextInt();
-                    expenses.add(value);
+                    Integer value = sc.nextInt();
+                    int index = searchExpenses(expenses, value);
+                    if (index<0) {index = -(index + 1);}
+                    expenses.add(index,value);
                     System.out.println("Your value is updated\n");
-                    expenses.addAll(arrlist);
                     System.out.println(expenses + "\n");
                     break;
                 case 3:
@@ -60,12 +50,15 @@ public class Main {
                     }
                     break;
                 case 4:
-                    sortExpenses(expenses);
+                    System.out.println("Enter the expense you need to search:\t");
+                    int location = searchExpenses(expenses, sc.nextInt());
+                    if (location > 0) {
+                        System.out.println("The expense is at index: "  + location);
+                    } else {
+                        System.out.println("The expense is not in your list. Should be added at index: " + location);
+                    }
                     break;
                 case 5:
-                    searchExpenses(expenses);
-                    break;
-                case 6:
                     closeApp();
                     break;
                 default:
@@ -80,14 +73,11 @@ public class Main {
         System.exit(0);
     }
 
-    private static void searchExpenses(ArrayList<Integer> arrayList) {
-        int leng = arrayList.size();
-        System.out.println("Enter the expense you need to search:\t");
-        //Complete the method
+    private static int searchExpenses(ArrayList<Integer> arrayList, Integer searchValue) {
+        return Collections.binarySearch(arrayList,searchValue);
     }
 
     private static void sortExpenses(ArrayList<Integer> arrayList) {
-        int arrlength = arrayList.size();
         Collections.sort(arrayList);
     }
 }
