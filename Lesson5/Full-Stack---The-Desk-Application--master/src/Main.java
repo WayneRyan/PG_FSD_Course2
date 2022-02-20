@@ -13,8 +13,8 @@ public class Main {
             "4. I wish to sort the expenditures\n" +
             "5. I wish to search for a particular expenditure\n" +
             "6. Close the application\n";
-    private boolean isSorted = true;
     private final Scanner sc = new Scanner(System.in);
+    private boolean isSorted = true;
 
     public Main() {
         expenses.addAll(Arrays.asList(1000, 2300, 45000, 32000, 110));
@@ -22,7 +22,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        /*System.out.println("Hello World!");*/
         System.out.println("\n**************************************\n");
         System.out.println("\tWelcome to TheDesk \n");
         System.out.println("**************************************");

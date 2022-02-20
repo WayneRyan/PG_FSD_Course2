@@ -1,7 +1,6 @@
 package com.wryan;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -13,7 +12,7 @@ public class BackendLogic {
     private static final String baseDirectory = "C:\\junk\\";
 
     public static boolean checkFileName(@NotNull String fileName){
-        return fileName == Paths.get(fileName).getFileName().toString();
+        return fileName.equals(Paths.get(fileName).getFileName().toString());
     }
 
     public static void deleteFile( @NotNull String fileName){
@@ -56,7 +55,6 @@ public class BackendLogic {
 
     public static void createFile( @NotNull String fileName){
         try {
-            // TODO: jail to specific folder
             File myObj = createFileObject(fileName);
             if (myObj==null) { return; }
             if ( myObj.exists()){

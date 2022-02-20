@@ -1,7 +1,5 @@
 package com.wryan;
 
-import java.io.IOException;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -15,14 +13,12 @@ public class UserInterface {
                 showMainMenu();
                 switch (Integer.parseInt(in.nextLine())) {
                     case 1 :
-                        System.out.println(BackendLogic.getFileListing().toString());
+                        System.out.println(BackendLogic.getFileListing());
                         break;
                     case 2 :
-                        System.out.println("You typed two");
                         doSubMenu();
                         break;
                     case 3 :
-                        System.out.println("You typed three");
                         done = true;
                         break;
                     default:
@@ -51,7 +47,7 @@ public class UserInterface {
                     break;
                 case "c" :
                     System.out.println("Please type a search string");
-                    System.out.printf(BackendLogic.filterFileListing(in.nextLine().trim(), BackendLogic.getFileListing()).toString());
+                    System.out.println(BackendLogic.filterFileListing(in.nextLine().trim(), BackendLogic.getFileListing()));
                     break;
                 case "d" :
                     done = true;
